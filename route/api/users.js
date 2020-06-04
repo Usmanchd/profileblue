@@ -27,7 +27,9 @@ router.post('/register', async (req, res) => {
     let userName = name.replace(/\s+/g, '').toLowerCase();
 
     if (names.length > 0) {
-      userName = `${name.toLowerCase()}-${romanize(names.length)}`;
+      userName = `${name.replace(/\s+/g, '').toLowerCase()}-${romanize(
+        names.length
+      )}`;
     }
 
     user = new User({
