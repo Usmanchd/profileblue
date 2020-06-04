@@ -21,6 +21,7 @@ let keys = [
   'link',
   's_email',
   'address',
+  'skype',
 ];
 
 const AddSocialsView = ({ onSubmit, mode, initialState, id }) => {
@@ -49,6 +50,7 @@ const AddSocialsView = ({ onSubmit, mode, initialState, id }) => {
     link: { value: '', clicks: 0 },
     s_email: { value: '', clicks: 0 },
     address: { value: '', clicks: 0 },
+    skype: { value: '', clicks: 0 },
   });
 
   const [display, setdisplay] = useState({
@@ -70,6 +72,7 @@ const AddSocialsView = ({ onSubmit, mode, initialState, id }) => {
     link: 'none',
     s_email: 'none',
     address: 'none',
+    skype: 'none',
   });
 
   const getLink = (social) => {
@@ -97,7 +100,8 @@ const AddSocialsView = ({ onSubmit, mode, initialState, id }) => {
               </div>
             </li>
           );
-        } else if (social === 'snapchat') {
+        }
+        if (social === 'snapchat') {
           return (
             <li
               className="urlCon"
@@ -112,7 +116,8 @@ const AddSocialsView = ({ onSubmit, mode, initialState, id }) => {
               </div>
             </li>
           );
-        } else {
+        }
+        if (social === 'skype') {
           return (
             <li
               className="urlCon"
@@ -121,13 +126,27 @@ const AddSocialsView = ({ onSubmit, mode, initialState, id }) => {
             >
               <div>
                 <p className="m-0">
-                  http://{social}.com/{state[social].value}
+                  skype:{state[social].value}?chat
                   <b></b>
                 </p>
               </div>
             </li>
           );
         }
+        return (
+          <li
+            className="urlCon"
+            style={{ display: display[social] }}
+            id="uc_instagram"
+          >
+            <div>
+              <p className="m-0">
+                http://{social}.com/{state[social].value}
+                <b></b>
+              </p>
+            </div>
+          </li>
+        );
       }
     }
   };

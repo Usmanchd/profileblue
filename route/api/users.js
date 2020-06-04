@@ -27,9 +27,7 @@ router.post('/register', async (req, res) => {
     let userName = name.replace(/\s+/g, '').toLowerCase();
 
     if (names.length > 0) {
-      userName = `${name.replace(/\s+/g, '').toLowerCase()}-${romanize(
-        names.length
-      )}`;
+      userName = `${name.replace(/\s+/g, '').toLowerCase()}-${names.length}`;
     }
 
     user = new User({
@@ -204,7 +202,7 @@ router.get('/vcf/:id', async (req, res) => {
       vCard.homeAddress.city = user.social.address.value;
     if (user.social.phone.value) vCard.cellPhone = user.social.phone.value;
 
-    vCard.url = `https://profilesblue.herokuapp.com/profile/${user._id}`;
+    vCard.url = `https://profilesblue.herokuapp.com/profile/${user.userName}`;
 
     if (user.social.instagram.value)
       vCard.workUrl = `https://www.instagram.com/${user.social['instagram'].value}`;

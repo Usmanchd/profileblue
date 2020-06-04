@@ -110,6 +110,10 @@ const UserSchema = new mongoose.Schema({
       value: String,
       clicks: Number,
     },
+    skype: {
+      value: String,
+      clicks: Number,
+    },
   },
 });
 

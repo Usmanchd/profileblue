@@ -57,6 +57,8 @@ const Dashboard = ({
         return `http://${username}.com/in/${user.social[username].value}`;
       else if (username === 'whatsapp')
         return `http://api.${username}.com/send?phone=+92${user.social[username].value}`;
+      else if (username === 'skype')
+        return `skype:${user.social[username].value}?chat`;
       else return `http://${username}.com/${user.social[username].value}`;
     }
   };
