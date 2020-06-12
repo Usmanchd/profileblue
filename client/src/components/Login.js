@@ -54,6 +54,7 @@ const Login = ({ loginUser, isAuth }) => {
                 name="email"
                 placeholder="Email"
                 onChange={(e) => onChangeHandler(e)}
+                value={loginData.email}
                 required
               />
               <input
@@ -61,6 +62,7 @@ const Login = ({ loginUser, isAuth }) => {
                 name="password"
                 placeholder="Password"
                 onChange={(e) => onChangeHandler(e)}
+                value={loginData.password}
                 required
               />
               <button className="btn w-100prc" type="submit" id="submitBtn">
