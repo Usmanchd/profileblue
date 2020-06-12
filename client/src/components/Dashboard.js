@@ -41,25 +41,23 @@ const Dashboard = ({
     if (user.social[username]) {
       if (username === 'spotify')
         return `http://open.${username}.com/add/${user.social[username].value}`;
-      else if (username === 'snapchat')
+      if (username === 'snapchat')
         return `http://${username}.com/add/${user.social[username].value}`;
-      else if (username === 'address')
+      if (username === 'address')
         return `https://www.google.com/maps/place/${user.social[username].value}`;
-      else if (username === 'phone')
-        return `tel:+92${user.social[username].value}`;
-      else if (username === 's_email')
+      if (username === 'phone') return `tel:+92${user.social[username].value}`;
+      if (username === 's_email')
         return `mailto:${user.social[username].value}`;
-      else if (username === 'website')
+      if (username === 'website')
         return `http://${user.social[username].value}`;
-      else if (username === 'link')
-        return `http://${user.social[username].value}`;
-      else if (username === 'linkedin')
+      if (username === 'link') return `http://${user.social[username].value}`;
+      if (username === 'linkedin')
         return `http://${username}.com/in/${user.social[username].value}`;
-      else if (username === 'whatsapp')
+      if (username === 'whatsapp')
         return `http://api.${username}.com/send?phone=+92${user.social[username].value}`;
-      else if (username === 'skype')
+      if (username === 'skype')
         return `skype:${user.social[username].value}?chat`;
-      else return `http://${username}.com/${user.social[username].value}`;
+      return `http://${username}.com/${user.social[username].value}`;
     }
   };
 
