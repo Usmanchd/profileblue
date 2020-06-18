@@ -228,7 +228,7 @@ const Dashboard = ({
 
             <div className="col-12 text-center r3" width="200">
               <QRCode
-                value={`${process.env.REACT_APP_DOMAIN}/profile/${user.userName}`}
+                value={`${process.env.REACT_APP_DOMAIN}/${user.userName}`}
               />
             </div>
             <div className="col-12 text-center r4">

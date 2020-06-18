@@ -163,7 +163,7 @@ router.post('/update_user', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
 
-    if (user.name !== obj.name) {
+    if (user.name !== obj.name && obj.avatarUrl && obj.bio && obj.social) {
       let names = await User.find({ privateName: obj.name.toLowerCase() });
       let userName = obj.name.replace(/\s+/g, '').toLowerCase();
 
