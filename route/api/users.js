@@ -159,7 +159,25 @@ router.post('/reset_password', async (req, res) => {
 router.post('/update_user', auth, async (req, res) => {
   let obj = req.body;
   if (obj._id) delete obj._id;
+  // console.log(obj);
   try {
+    const user = await User.findById(req.user.id);
+
+    if (user.name !== obj.name) {
+      let names = await User.find({ privateName: obj.name.toLowerCase() });
+      let userName = obj.name.replace(/\s+/g, '').toLowerCase();
+
+      if (names.length > 0) {
+        userName = `${obj.name.replace(/\s+/g, '').toLowerCase()}-${
+          names.length
+        }`;
+      }
+
+      obj.privateName = obj.name.toLowerCase();
+      obj.userName = userName;
+      obj.name = obj.name;
+    }
+
     await User.findByIdAndUpdate(req.user.id, obj);
     res.status(200).send('success');
   } catch (err) {
@@ -202,7 +220,7 @@ router.get('/vcf/:id', async (req, res) => {
       vCard.homeAddress.city = user.social.address.value;
     if (user.social.phone.value) vCard.cellPhone = user.social.phone.value;
 
-    vCard.url = `https://profilesblue.herokuapp.com/profile/${user.userName}`;
+    vCard.url = `${process.env.REACT_APP_DOMAIN}/${user.userName}`;
 
     if (user.social.instagram.value)
       vCard.workUrl = `https://www.instagram.com/${user.social['instagram'].value}`;

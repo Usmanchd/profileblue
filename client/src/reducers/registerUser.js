@@ -11,14 +11,14 @@ import {
 
 const initialState = {
   token: localStorage.getItem('token'),
-  isAuth: null,
+  isAuth: false,
   user: null,
   loading: true,
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
-
+  console.log(state);
   switch (type) {
     case USER_LOADED:
       return {

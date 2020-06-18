@@ -9,6 +9,7 @@ import { logout, updateClicks } from '../actions/registerUser';
 import logo from '../assets/blue-logo.png';
 import xclose from '../assets/xclose.png';
 import map from '../assets/map.png';
+import PublicProfile from './PublicProfile';
 var QRCode = require('qrcode.react');
 
 const Dashboard = ({
@@ -23,7 +24,7 @@ const Dashboard = ({
   // if (!isAuth && !loading && !id) return <Redirect to="/register" />;
 
   if ((!user || id !== user.userName) && !loading) {
-    return <Redirect to={`/profile/${id}`} />;
+    return <PublicProfile />;
   }
 
   const handleClicks = (name) => {
