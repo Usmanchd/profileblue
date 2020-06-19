@@ -10,6 +10,7 @@ import logo from '../assets/blue-logo.png';
 import xclose from '../assets/xclose.png';
 import map from '../assets/map.png';
 import PublicProfile from './PublicProfile';
+import axios from 'axios';
 var QRCode = require('qrcode.react');
 
 const Dashboard = ({
@@ -20,9 +21,7 @@ const Dashboard = ({
 }) => {
   const [show, setshow] = useState('');
   const { id } = useParams();
-
   // if (!isAuth && !loading && !id) return <Redirect to="/register" />;
-
   if ((!user || id !== user.userName) && !loading) {
     return <PublicProfile />;
   }
@@ -228,7 +227,7 @@ const Dashboard = ({
 
             <div className="col-12 text-center r3" width="200">
               <QRCode
-                value={`${process.env.REACT_APP_DOMAIN}/${user.userName}`}
+                value={`${process.env.REACT_APP_DOMAIN}/${user.lengthId}`}
               />
             </div>
             <div className="col-12 text-center r4">

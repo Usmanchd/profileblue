@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
   views: { type: Number, default: 0 },
   // ipOfUsersThatRequestedYourProfile: [{ type: String, default: null }],
+  lengthId: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
   userName: {
     type: String,
     required: true,

@@ -1,28 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect, useParams } from 'react-router-dom';
+import { Link, Redirect, useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../actions/registerUser';
 import axios from 'axios';
 import Footer from './Footer';
 import Spinner from './Spinner';
-import download from '../assets/download.png';
+// import download from '../assets/download.png';
 var QRCode = require('qrcode.react');
 
 const PublicProfile = ({ authh: { isAuth, loading }, logout, logedUser }) => {
+  const history = useHistory();
   const { id } = useParams();
   const [user, setuser] = useState();
   const [show, setshow] = useState('show1');
   const [error, seterror] = useState(null);
+  const parsed = parseInt(id, 10);
 
   useEffect(() => {
-    (() =>
-      axios
-        .get(`/api/users/current/${id}`)
-        .then((user) => setuser(user.data))
-        .catch(() => {
-          seterror('not Found');
-        }))();
-  }, []);
+    (() => {
+      if (!isNaN(parsed)) {
+        axios
+          .get(`/api/users/myusername/${id}`)
+          .then((res) => {
+            const user = res.data;
+            console.log(user);
+            history.push(`/${user.userName}`);
+          })
+          .catch(() => {
+            seterror('not Found');
+          });
+      } else {
+        axios
+          .get(`/api/users/current/${id}`)
+          .then((user) => setuser(user.data))
+          .catch(() => {
+            seterror('not Found');
+          });
+      }
+    })();
+  }, [id]);
 
   const handleClicks = async (name) => {
     const config = {
@@ -238,7 +254,7 @@ const PublicProfile = ({ authh: { isAuth, loading }, logout, logedUser }) => {
 
           <div className="col-12 text-center r3" width="200">
             <QRCode
-              value={`${process.env.REACT_APP_DOMAIN}/${user.userName}`}
+              value={`${process.env.REACT_APP_DOMAIN}/${user.lengthId}`}
             />
           </div>
           <div className="col-12 text-center r4">

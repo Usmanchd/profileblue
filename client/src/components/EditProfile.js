@@ -6,8 +6,8 @@ import { updateUser } from '../actions/registerUser';
 import firebase from '../config/fbConfig';
 import FileUploader from 'react-firebase-file-uploader';
 import Spinner from './Spinner';
-import { FaBeer } from 'react-icons/fa';
-import { IoIosAdd } from 'react-icons/io';
+// import { FaBeer } from 'react-icons/fa';
+// import { IoIosAdd } from 'react-icons/io';
 
 const EditProfile = ({ loading, user, updateUser, isAuth }) => {
   useEffect(() => {

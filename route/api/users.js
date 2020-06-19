@@ -16,11 +16,14 @@ router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
   try {
     let user = await User.findOne({ email });
+
     if (user) {
       return res
         .status(400)
         .json({ errors: { msg: 'User is already registered' } });
     }
+
+    const lengthId = (await User.countDocuments()) + 1;
 
     let names = await User.find({ privateName: name.toLowerCase() });
 
@@ -32,6 +35,7 @@ router.post('/register', async (req, res) => {
 
     user = new User({
       privateName: name.toLowerCase(),
+      lengthId,
       userName,
       name,
       email,
@@ -79,6 +83,17 @@ router.get('/current/:id', async (req, res) => {
     await user.save();
     res.json(user);
   } catch (err) {
+    res.status(500).json('Server Error');
+  }
+});
+
+router.get('/myusername/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const username = await User.findOne({ lengthId: id });
+    if (!username) return res.status(404).json('Not Found');
+    res.json({ userName: username.userName });
+  } catch (error) {
     res.status(500).json('Server Error');
   }
 });
@@ -220,7 +235,7 @@ router.get('/vcf/:id', async (req, res) => {
       vCard.homeAddress.city = user.social.address.value;
     if (user.social.phone.value) vCard.cellPhone = user.social.phone.value;
 
-    vCard.url = `${process.env.REACT_APP_DOMAIN}/${user.userName}`;
+    vCard.url = `${process.env.REACT_APP_DOMAIN}/${user.lengthId}`;
 
     if (user.social.instagram.value)
       vCard.workUrl = `https://www.instagram.com/${user.social['instagram'].value}`;
