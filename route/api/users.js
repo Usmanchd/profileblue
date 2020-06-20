@@ -229,7 +229,6 @@ router.get('/vcf/:id', async (req, res) => {
 
     if (user._id) vCard.uid = user._id;
     if (user.name) vCard.firstName = user.name;
-
     if (user.email) vCard.email = user.email;
     if (user.social.address.value)
       vCard.homeAddress.city = user.social.address.value;

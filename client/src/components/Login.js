@@ -6,8 +6,8 @@ import { loginUser } from '../actions/registerUser';
 
 const Login = ({ loginUser, isAuth }) => {
   const [loginData, setLoginData] = useState({
-    email: 'usman@gmail.com',
-    password: '123456',
+    email: '',
+    password: '',
   });
   const { email, password } = loginData;
   const onChangeHandler = (e) =>

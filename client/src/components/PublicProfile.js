@@ -5,10 +5,10 @@ import { logout } from '../actions/registerUser';
 import axios from 'axios';
 import Footer from './Footer';
 import Spinner from './Spinner';
-// import download from '../assets/download.png';
+
 var QRCode = require('qrcode.react');
 
-const PublicProfile = ({ authh: { isAuth, loading }, logout, logedUser }) => {
+const PublicProfile = ({ authh: { isAuth, loading }, logedUser }) => {
   const history = useHistory();
   const { id } = useParams();
   const [user, setuser] = useState();
@@ -23,7 +23,6 @@ const PublicProfile = ({ authh: { isAuth, loading }, logout, logedUser }) => {
           .get(`/api/users/myusername/${id}`)
           .then((res) => {
             const user = res.data;
-            console.log(user);
             history.push(`/${user.userName}`);
           })
           .catch(() => {
