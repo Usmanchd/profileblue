@@ -5,8 +5,8 @@ import { logout } from '../actions/registerUser';
 import axios from 'axios';
 import Footer from './Footer';
 import Spinner from './Spinner';
-
-var QRCode = require('qrcode.react');
+import QrScan from './QrScan';
+import ListItem from './ListItem';
 
 const PublicProfile = ({ authh: { isAuth, loading }, logedUser }) => {
   const history = useHistory();
@@ -63,30 +63,6 @@ const PublicProfile = ({ authh: { isAuth, loading }, logedUser }) => {
       );
       setuser(u.data);
     } catch (err) {}
-  };
-
-  const getLink = (username) => {
-    if (user.social[username]) {
-      if (username === 'spotify')
-        return `http://open.${username}.com/add/${user.social[username].value}`;
-      if (username === 'snapchat')
-        return `http://${username}.com/add/${user.social[username].value}`;
-      if (username === 'address')
-        return `https://www.google.com/maps/place/${user.social[username].value}`;
-      if (username === 'phone') return `tel:+92${user.social[username].value}`;
-      if (username === 's_email')
-        return `mailto:${user.social[username].value}`;
-      if (username === 'website')
-        return `http://${user.social[username].value}`;
-      if (username === 'link') return `http://${user.social[username].value}`;
-      if (username === 'linkedin')
-        return `http://${username}.com/in/${user.social[username].value}`;
-      if (username === 'whatsapp')
-        return `http://api.${username}.com/send?phone=+92${user.social[username].value}`;
-      if (username === 'skype')
-        return `skype:${user.social[username].value}?chat`;
-      return `http://${username}.com/${user.social[username].value}`;
-    }
   };
 
   if (error) return <Redirect to="/login" />;
@@ -163,55 +139,13 @@ const PublicProfile = ({ authh: { isAuth, loading }, logedUser }) => {
                       Object.keys(user.social).map(
                         (username) =>
                           user.social[username].value !== '' && (
-                            <React.Fragment>
-                              <li className="col-12">
-                                <a
-                                  type="instagram"
-                                  href={getLink(username)}
-                                  target="_blank"
-                                  onClick={() => handleClicks(username)}
-                                  style={{
-                                    display: 'flex',
-                                    justifyContent: 'flex-start',
-                                    alignItems: 'center',
-                                    width: '100%',
-                                    margin: 'auto',
-                                  }}
-                                >
-                                  <img
-                                    src={
-                                      username === 'address'
-                                        ? 'https://www.profiles.blue/assets/imgs/map.png'
-                                        : `https://www.profiles.blue/assets/imgs/social-network-${username}.png`
-                                    }
-                                  />
-                                  <div>
-                                    <p
-                                      style={{
-                                        marginBottom: '0',
-                                        marginLeft: '10px',
-                                      }}
-                                    >
-                                      <b>
-                                        {username.charAt(0).toUpperCase() +
-                                          username.slice(1)}
-                                      </b>
-                                      <br />
-                                      {/* <b>Clicks: </b>
-                                      {user.social[username].clicks} */}
-                                    </p>
-                                  </div>
-                                </a>
-                              </li>
-                              <span
-                                style={{
-                                  borderTop: '1px solid #bdbdbd',
-                                  // height: '1px',
-                                  width: '100%',
-                                  margin: 'auto',
-                                }}
-                              ></span>
-                            </React.Fragment>
+                            <ListItem
+                              user={user}
+                              handleClicks={handleClicks}
+                              username={username}
+                              isPublic={true}
+                              size={'18px'}
+                            />
                           )
                       )}
                   </ul>
@@ -226,50 +160,7 @@ const PublicProfile = ({ authh: { isAuth, loading }, logedUser }) => {
       </div>
       <Footer />
 
-      <div>
-        <div className={`col-12 ${show}`} id="profileQrCon">
-          <div
-            className="col-12 text-right pt-4 p-0"
-            onClick={() => setshow('')}
-          >
-            <img
-              src="https://www.profiles.blue/assets/imgs/xclose.png"
-              width="25"
-              className="clsPopup"
-              target="#profileQrCon"
-              alt="QR CODE"
-            />
-          </div>
-          <div className="col-12 r2 text-center">
-            <div className="my-profile-photo">
-              <img src={user.avatarUrl} alt="Avatar" id="profileImg" />
-            </div>
-            <div className="col-12 p-2">
-              <h1>
-                <b>{user.name}</b>
-              </h1>
-            </div>
-          </div>
-
-          <div className="col-12 text-center r3" width="200">
-            <QRCode
-              value={`${process.env.REACT_APP_DOMAIN}/${user.lengthId}`}
-            />
-          </div>
-          <div className="col-12 text-center r4">
-            <b>Scan this code with a camera</b>
-            <br />
-            <b>to share your Blue profile.</b>
-          </div>
-          <div className="col-12 text-center r5">
-            <img
-              src="https://www.profiles.blue/assets/imgs/blue-logo.png"
-              width="100"
-              alt="LOGO"
-            />
-          </div>
-        </div>
-      </div>
+      <QrScan user={user} show={show} setshow={setshow} />
     </div>
   );
 };

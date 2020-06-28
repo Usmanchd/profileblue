@@ -2,6 +2,10 @@
   font-family: 'Comfortaa', sans-serif !important;
 }
 
+li.search {
+  z-index: 1 !important;
+}
+
 body {
   margin: 0;
 
