@@ -198,7 +198,7 @@ export const SocialInput = ({
       onFocus={(e) => setdisplay({ ...display, [e.target.name]: 'block' })}
       onBlur={(e) => setdisplay({ ...display, [e.target.name]: 'none' })}
       name={social}
-      placeholder={social === 's_email' ? 'Email' : social.toUpperCase()}
+      placeholder={social === 's_email' ? 'EMAIL' : social.toUpperCase()}
       className="socLink"
       type="text"
     />
