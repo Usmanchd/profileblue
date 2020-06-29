@@ -174,7 +174,6 @@ router.post('/reset_password', async (req, res) => {
 router.post('/update_user', auth, async (req, res) => {
   let obj = req.body;
   if (obj._id) delete obj._id;
-  // console.log(obj);
   try {
     const user = await User.findById(req.user.id);
 
@@ -192,6 +191,8 @@ router.post('/update_user', auth, async (req, res) => {
       obj.userName = userName;
       obj.name = obj.name;
     }
+
+    
 
     await User.findByIdAndUpdate(req.user.id, obj);
     res.status(200).send('success');

@@ -108,6 +108,7 @@ export const updateUser = (obj) => async (disptach) => {
       'Content-type': 'application/json',
     },
   };
+
   const body = JSON.stringify(obj);
 
   try {

@@ -41,7 +41,11 @@ export default function ListItem({
                 fontSize: size,
               }}
             >
-              <b>{username.charAt(0).toUpperCase() + username.slice(1)}</b>
+              <b>
+                {username === 's_email'
+                  ? 'Email'
+                  : username.charAt(0).toUpperCase() + username.slice(1)}
+              </b>
             </p>
 
             <p
