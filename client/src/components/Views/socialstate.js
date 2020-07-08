@@ -12,6 +12,8 @@ export const keys = [
   'phone',
   'linkedin',
   'youtube',
+  'tiktok',
+  'twitch',
   'pinterest',
   'applemusic',
   'spotify',
@@ -34,6 +36,8 @@ export const defaultstate = {
   facebook: { value: '', clicks: 0 },
   linkedin: { value: '', clicks: 0 },
   youtube: { value: '', clicks: 0 },
+  tiktok: { value: '', clicks: 0 },
+  twitch: { value: '', clicks: 0 },
   pinterest: { value: '', clicks: 0 },
   applemusic: { value: '', clicks: 0 },
   spotify: { value: '', clicks: 0 },
@@ -56,6 +60,8 @@ export const defaultdisplay = {
   phone: 'none',
   linkedin: 'none',
   youtube: 'none',
+  tiktok: 'none',
+  twitch: 'none',
   pinterest: 'none',
   applemusic: 'none',
   spotify: 'none',
@@ -126,6 +132,22 @@ export const getLink = (social, display, state) => {
           </li>
         );
       }
+      if (social === 'tiktok') {
+        return (
+          <li
+            className="urlCon"
+            style={{ display: display[social] }}
+            id="uc_instagram"
+          >
+            <div>
+              <p className="m-0">
+                http://{social}.com/@{state[social].value}
+                <b></b>
+              </p>
+            </div>
+          </li>
+        );
+      }
       return (
         <li
           className="urlCon"
@@ -159,15 +181,15 @@ export const getButton = (mode, state, onSubmit, id) =>
     </React.Fragment>
   ) : (
     <React.Fragment>
-      <Link to={`/${id}`}>
-        <button
-          className="btn w-100prc"
-          id="submitBtn"
-          onClick={() => onSubmit(state)}
-        >
-          Save
-        </button>
-      </Link>
+      {/* <Link to={`/${id}`}> */}
+      <button
+        className="btn w-100prc"
+        id="submitBtn"
+        onClick={() => onSubmit(state)}
+      >
+        Save
+      </button>
+      {/* </Link> */}
     </React.Fragment>
   );
 
@@ -207,11 +229,7 @@ export const SocialInput = ({
 
 export const getImg = (social) => (
   <img
-    src={
-      social === 'address'
-        ? map
-        : `https://www.profiles.blue/assets/imgs/social-network-${social}.png`
-    }
+    src={`${process.env.REACT_APP_DOMAIN}/images/social-network-${social}.png`}
     alt="social"
   />
 );

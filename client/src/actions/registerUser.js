@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -47,8 +48,10 @@ export const registerUser = ({ name, email, password }) => async (disptach) => {
     });
     disptach(loadUser());
   } catch (err) {
-    alert('Email Already Registered');
-
+    // alert('Email Already Registered');
+    toast.error('🚫Email Already Registered', {
+      toastId: '2',
+    });
     disptach({
       type: REGISTER_FAIL,
     });
@@ -78,7 +81,10 @@ export const loginUser = (email, password) => async (disptach) => {
     // if (errors) {
     //   errors.forEach((error) => disptach(setAlert(error.msg, "danger")));
     // }
-    alert('Username OR Password is not correct');
+    // alert('Username OR Password is not correct');
+    toast.error('🚫 Email OR Password is not correct', {
+      toastId: '1',
+    });
     disptach({
       type: LOGIN_FAIL,
     });
@@ -102,7 +108,7 @@ export const addPic = (obj) => async (disptach) => {
     });
   }
 };
-export const updateUser = (obj) => async (disptach) => {
+export const updateUser = (obj, history) => async (disptach) => {
   const config = {
     headers: {
       'Content-type': 'application/json',
@@ -113,11 +119,21 @@ export const updateUser = (obj) => async (disptach) => {
 
   try {
     await axios.post('/api/users/update_user', body, config);
+
+    if (
+      obj.bio !== undefined &&
+      obj.avatarUrl !== undefined &&
+      obj.social !== undefined
+    )
+      toast.success('🦄 User Updated!');
     disptach(loadUser());
+    history.push(`/${obj.userName}`);
   } catch (err) {
-    disptach({
-      type: UPDATE_FAIL,
-    });
+    console.log(err);
+    toast.error(`❗️ ${err.response.data.errors} 😟`);
+    // disptach({
+    //   type: UPDATE_FAIL,
+    // });
   }
 };
 

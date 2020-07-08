@@ -59,6 +59,7 @@ const UserSchema = new mongoose.Schema({
       value: String,
       clicks: Number,
     },
+
     phone: {
       value: String,
       clicks: Number,
@@ -76,6 +77,14 @@ const UserSchema = new mongoose.Schema({
       clicks: Number,
     },
     youtube: {
+      value: String,
+      clicks: Number,
+    },
+    tiktok: {
+      value: String,
+      clicks: Number,
+    },
+    twitch: {
       value: String,
       clicks: Number,
     },

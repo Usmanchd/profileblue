@@ -337,6 +337,20 @@ var vCard = function () {
     websiteUrl: '',
 
     /**
+     * URL pointing to a website that represents the person's work in some way
+     * @type {String}
+     */
+
+    tiktokUrl: '',
+
+    /**
+     * URL pointing to a website that represents the person's work in some way
+     * @type {String}
+     */
+
+    twitcheUrl: '',
+
+    /**
      * Work mailing address
      * @type {object}
      */

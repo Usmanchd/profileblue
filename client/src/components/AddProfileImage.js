@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { staticImgLink as defaultImg } from './staticProfileImg';
 import avatar from '../assets/imgs/blue-logo.png';
 import { Link, Redirect } from 'react-router-dom';
 import firebase from '../config/fbConfig';
@@ -12,7 +13,7 @@ const AddProfileImage = ({ updateUser, user, isAuth, loading }) => {
     avatar: '',
     isUploading: false,
     progress: 0,
-    avatarURL: '',
+    avatarURL: defaultImg,
   });
   const [imgLoading, setimgLoading] = useState(false);
   const handleUploadStart = () => {

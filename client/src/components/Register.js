@@ -83,6 +83,7 @@ const Register = ({ setAlert, registerUser, isReg }) => {
                   className="btn w-100prc"
                   id="submitBtn"
                   onClick={e => onSubmitHandler(e)}
+                  style={{marginTop: '14px'}}
                 >
                   Create Account
                 </button>

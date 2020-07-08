@@ -16,7 +16,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
+.my-name input[type='password'] {
+  margin: 0;
+  padding: 10px 2%;
+}
+
+.tuto1 {
+  z-index: 0;
+}
+
+.Toastify__close-button > svg {
+  position: unset !important;
+}
+
+.Toastify__toast--success {
+  background: #22bb33 !important;
+}

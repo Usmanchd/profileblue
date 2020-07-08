@@ -475,7 +475,14 @@
         formattedVCardString +=
           'URL;Type=website' + ':' + e(vCard.websiteUrl) + nl();
       }
-
+      if (vCard.tiktokUrl) {
+        formattedVCardString +=
+          'URL;Type=website' + ':' + e(vCard.tiktokUrl) + nl();
+      }
+      if (vCard.twitchUrl) {
+        formattedVCardString +=
+          'URL;Type=website' + ':' + e(vCard.twitchUrl) + nl();
+      }
       if (vCard.note) {
         formattedVCardString +=
           'NOTE' + encodingPrefix + ':' + e(vCard.note) + nl();

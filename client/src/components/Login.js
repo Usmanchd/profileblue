@@ -65,7 +65,7 @@ const Login = ({ loginUser, isAuth }) => {
                 value={loginData.password}
                 required
               />
-              <button className="btn w-100prc" type="submit" id="submitBtn">
+              <button className="btn w-100prc" type="submit" id="submitBtn" style={{marginTop: '14px'}}>
                 Log In
               </button>
               <Link to="reset_password" className="forgot">

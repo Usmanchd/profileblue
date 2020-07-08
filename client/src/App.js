@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import Landing from './components/Landing';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Register from './components/Register';
@@ -18,6 +19,9 @@ import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './actions/registerUser';
 import PublicProfile from './components/PublicProfile';
 import ResetPassword from './components/ResetPassword';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 require('dotenv').config();
 
 if (localStorage.token) {
@@ -26,11 +30,12 @@ if (localStorage.token) {
 
 function App() {
   useEffect(() => {
-    store.dispatch(loadUser())
+    store.dispatch(loadUser());
   }, []);
 
   return (
     <Provider store={store}>
+      <ToastContainer style={{ fontSize: '14px' }}  />
       <Router>
         <Switch>
           <Route exact path="/landing">

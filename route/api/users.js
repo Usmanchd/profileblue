@@ -30,7 +30,7 @@ router.post('/register', async (req, res) => {
     let userName = name.replace(/\s+/g, '').toLowerCase();
 
     if (names.length > 0) {
-      userName = `${name.replace(/\s+/g, '').toLowerCase()}-${names.length}`;
+      userName = `${userName}-${names.length}`;
     }
 
     user = new User({
@@ -181,17 +181,26 @@ router.post('/update_user', auth, async (req, res) => {
     if (user.name !== obj.name && obj.avatarUrl && obj.bio && obj.social) {
       let names = await User.find({ privateName: obj.name.toLowerCase() });
       let userName = obj.name.replace(/\s+/g, '').toLowerCase();
-
       if (names.length > 0) {
-        userName = `${obj.name.replace(/\s+/g, '').toLowerCase()}-${
-          names.length
-        }`;
+        userName = `${userName}-${names.length}`;
       }
-
       obj.privateName = obj.name.toLowerCase();
       obj.userName = userName;
       obj.name = obj.name;
     }
+
+    if (obj.curpassword && obj.newpassword) {
+      const isMatch = await bcrypt.compare(obj.curpassword, user.password);
+      if (!isMatch) {
+        return res.status(400).json({
+          errors: 'Password Update Fail, Current password is not correct',
+        });
+      }
+      const salt = await bcrypt.genSalt(10);
+      obj.password = await bcrypt.hash(obj.newpassword, salt);
+    }
+    delete obj.curpassword;
+    delete obj.newpassword;
 
     await User.findByIdAndUpdate(req.user.id, obj);
     res.status(200).send('success');
@@ -229,7 +238,7 @@ router.get('/vcf/:id', async (req, res) => {
 
     if (user._id) vCard.uid = user._id;
     if (user.name) vCard.firstName = user.name;
-    if (user.email) vCard.email = user.email;
+    if (user.email) vCard.email = user.social.s_email.value;
     if (user.social.address.value)
       vCard.homeAddress.city = user.social.address.value;
     if (user.social.phone.value) vCard.cellPhone = user.social.phone.value;
@@ -248,6 +257,10 @@ router.get('/vcf/:id', async (req, res) => {
       vCard.facebookUrl = `http://facebook.com/${user.social['facebook'].value}`;
     if (user.social.linkedin.value)
       vCard.linkedinUrl = `http://linkedin.com/${user.social['linkedin'].value}`;
+    if (user.social.tiktok.value)
+      vCard.tiktokUrl = `http://tiktok.com/@${user.social['tiktok'].value}`;
+    if (user.social.twitch.value)
+      vCard.twitchUrl = `http://twitch.com/${user.social['twitch'].value}`;
     if (user.social.youtube.value)
       vCard.youtubeUrl = `http://youtube.com/${user.social['youtube'].value}`;
     if (user.social.applemusic.value)

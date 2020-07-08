@@ -16,3 +16,4 @@ export const ADD_PIC = "ADD_PIC";
 export const ADD_BIO = "ADD_BIO";
 export const ADD_SOCIAL = "ADD_SOCIAL";
 export const UPDATE_FAIL = "UPDATE_FAIL";
+export const PASS_ERROR = "PASS_ERROR";

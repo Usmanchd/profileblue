@@ -94,6 +94,9 @@ const getLink = (username, user) => {
       return `http://api.${username}.com/send?phone=${user.social[username].value}`;
     if (username === 'skype')
       return `skype:${user.social[username].value}?chat`;
+    if (username === 'tiktok')
+      return `http://${username}.com/@${user.social[username].value}`;
+
     return `http://${username}.com/${user.social[username].value}`;
   }
 };
