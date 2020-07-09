@@ -71,16 +71,16 @@ const EditProfile = ({ loading, user, updateUser, isAuth }) => {
       (User.curpassword && !User.newpassword) ||
       (!User.curpassword && User.newpassword)
     )
-      return toast.error('🚫 Invalid Password ');
+      return alert('🚫 Invalid Password ');
     if (User.curpassword && User.newpassword && User.newpassword.length < 6)
-      return toast.error('🚫 Password must be 6 or more characters');
+      return alert('🚫 Password must be 6 or more characters');
     if (
       User.curpassword &&
       User.newpassword &&
       User.curpassword === User.newpassword
     )
-    return toast.error('🚫 New Password cannot be same as old password');
-      setloading(true);
+      return alert('🚫 New Password cannot be same as old password');
+    setloading(true);
     let updatedUser = { ...User, social };
     if (state.avatarURL) updatedUser.avatarUrl = state.avatarURL;
     updateUser(updatedUser, history);

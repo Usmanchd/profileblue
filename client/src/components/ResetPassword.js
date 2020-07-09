@@ -68,6 +68,7 @@ const ResetPassword = ({
                 onChange={(e) =>
                   setpassword({ ...password, [e.target.id]: e.target.value })
                 }
+                style={{ marginBottom: '15px' }}
               />
               <input
                 type="password"
@@ -79,6 +80,7 @@ const ResetPassword = ({
                 onChange={(e) =>
                   setpassword({ ...password, [e.target.id]: e.target.value })
                 }
+                style={{ marginBottom: '15px' }}
               />
               <button className="btn w-100prc" id="submitBtnResetPass">
                 Submit

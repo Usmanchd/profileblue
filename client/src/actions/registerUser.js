@@ -49,9 +49,7 @@ export const registerUser = ({ name, email, password }) => async (disptach) => {
     disptach(loadUser());
   } catch (err) {
     // alert('Email Already Registered');
-    toast.error('🚫Email Already Registered', {
-      toastId: '2',
-    });
+    alert('🚫Email Already Registered');
     disptach({
       type: REGISTER_FAIL,
     });
@@ -82,9 +80,7 @@ export const loginUser = (email, password) => async (disptach) => {
     //   errors.forEach((error) => disptach(setAlert(error.msg, "danger")));
     // }
     // alert('Username OR Password is not correct');
-    toast.error('🚫 Email OR Password is not correct', {
-      toastId: '1',
-    });
+    alert('🚫 Email OR Password is not correct');
     disptach({
       type: LOGIN_FAIL,
     });
@@ -125,12 +121,12 @@ export const updateUser = (obj, history) => async (disptach) => {
       obj.avatarUrl !== undefined &&
       obj.social !== undefined
     )
-      toast.success('🦄 User Updated!');
+      // alert('🦄 User Updated!');
     disptach(loadUser());
     history.push(`/${obj.userName}`);
   } catch (err) {
     console.log(err);
-    toast.error(`❗️ ${err.response.data.errors} 😟`);
+    alert(`❗️ ${err.response.data.errors} 😟`);
     // disptach({
     //   type: UPDATE_FAIL,
     // });
