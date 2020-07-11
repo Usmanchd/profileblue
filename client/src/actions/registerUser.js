@@ -122,8 +122,8 @@ export const updateUser = (obj, history) => async (disptach) => {
       obj.social !== undefined
     )
       // alert('🦄 User Updated!');
-    disptach(loadUser());
-    history.push(`/${obj.userName}`);
+      disptach(loadUser());
+    history.push(`/${obj.lengthId}`);
   } catch (err) {
     console.log(err);
     alert(`❗️ ${err.response.data.errors} 😟`);
