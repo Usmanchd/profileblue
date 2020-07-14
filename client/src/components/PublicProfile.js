@@ -8,13 +8,19 @@ import Spinner from './Spinner';
 import QrScan from './QrScan';
 import ListItem from './ListItem';
 
+const getid = (hash) => {
+  let index = hash.indexOf('-');
+  let result = hash.slice(index + 1);
+  return result;
+};
+
 const PublicProfile = ({ authh: { isAuth, loading }, logedUser }) => {
   const history = useHistory();
   const { id } = useParams();
   const [user, setuser] = useState();
   const [show, setshow] = useState('show1');
   const [error, seterror] = useState(null);
-  const parsed = parseInt(id, 10);
+  const parsed = parseInt(getid(id), 10);
 
   useEffect(() => {
     (() => {

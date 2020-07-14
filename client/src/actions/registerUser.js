@@ -87,23 +87,23 @@ export const loginUser = (email, password) => async (disptach) => {
   }
 };
 
-// Add Picture
-export const addPic = (obj) => async (disptach) => {
-  const config = {
-    headers: {
-      'Content-type': 'application/json',
-    },
-  };
-  const body = JSON.stringify(obj);
-  try {
-    await axios.post('/api/users/add_pic', body, config);
-    disptach(loadUser());
-  } catch (err) {
-    disptach({
-      type: UPDATE_FAIL,
-    });
-  }
-};
+// // Add Picture
+// export const addPic = (obj) => async (disptach) => {
+//   const config = {
+//     headers: {
+//       'Content-type': 'application/json',
+//     },
+//   };
+//   const body = JSON.stringify(obj);
+//   try {
+//     await axios.post('/api/users/add_pic', body, config);
+//     disptach(loadUser());
+//   } catch (err) {
+//     disptach({
+//       type: UPDATE_FAIL,
+//     });
+//   }
+// };
 export const updateUser = (obj, history) => async (disptach) => {
   const config = {
     headers: {
@@ -116,14 +116,14 @@ export const updateUser = (obj, history) => async (disptach) => {
   try {
     await axios.post('/api/users/update_user', body, config);
 
+    disptach(loadUser());
+
     if (
       obj.bio !== undefined &&
       obj.avatarUrl !== undefined &&
       obj.social !== undefined
     )
-      // alert('🦄 User Updated!');
-      disptach(loadUser());
-    history.push(`/${obj.lengthId}`);
+      history.push(`/${obj.lengthId}`);
   } catch (err) {
     console.log(err);
     alert(`❗️ ${err.response.data.errors} 😟`);

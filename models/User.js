@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema({
   views: { type: Number, default: 0 },
   // ipOfUsersThatRequestedYourProfile: [{ type: String, default: null }],
   lengthId: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },

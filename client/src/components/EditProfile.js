@@ -7,7 +7,6 @@ import { updateUser, registerUser } from '../actions/registerUser';
 import firebase from '../config/fbConfig';
 import FileUploader from 'react-firebase-file-uploader';
 import Spinner from './Spinner';
-import { IconContext } from 'react-icons';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 const EditProfile = ({ loading, user, updateUser, isAuth }) => {

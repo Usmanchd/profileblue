@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
-const romanize = require('../../middleware/romanize');
+const makeid = require('../../middleware/makeId');
 const nodemailer = require('nodemailer');
 
 // @route  POST/api/users
@@ -22,8 +22,15 @@ router.post('/register', async (req, res) => {
         .status(400)
         .json({ errors: { msg: 'User is already registered' } });
     }
+    let lengthId = '';
+    let uniqueNotFound = true;
+    while (uniqueNotFound) {
+      lengthId = makeid(8) + '-' + parseInt((await User.countDocuments()) + 1);
 
-    const lengthId = (await User.countDocuments()) + 1;
+      let uuser = await User.findOne({ lengthId });
+
+      if (!uuser) uniqueNotFound = false;
+    }
 
     let names = await User.find({ privateName: name.toLowerCase() });
 
@@ -178,7 +185,12 @@ router.post('/update_user', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
 
-    if (user.name !== obj.name && obj.avatarUrl && obj.bio && obj.social) {
+    if (
+      user.name !== obj.name &&
+      obj.avatarUrl !== null &&
+      obj.bio !== undefined &&
+      obj.social !== undefined
+    ) {
       let names = await User.find({ privateName: obj.name.toLowerCase() });
       let userName = obj.name.replace(/\s+/g, '').toLowerCase();
       if (names.length > 0) {

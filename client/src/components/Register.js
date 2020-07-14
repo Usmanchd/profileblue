@@ -1,24 +1,28 @@
-import React, { useState } from "react";
-
-import logo from "../assets/imgs/blue-logo.png";
-import { Link, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { setAlert } from "../actions/alerts";
-import { registerUser } from "../actions/registerUser";
+import React, { useState } from 'react';
+import logo from '../assets/imgs/blue-logo.png';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAlert } from '../actions/alerts';
+import { registerUser } from '../actions/registerUser';
 
 const Register = ({ setAlert, registerUser, isReg }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: ""
+    name: '',
+    email: '',
+    password: '',
   });
   const { name, email, password } = formData;
-  const onChangeHandler = e =>
+  const onChangeHandler = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const onSubmitHandler = async e => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    if (name === "" || email === "" || password === "") {
-      alert("Please Fill All The Fields");
+    if (
+      name === '' ||
+      email === '' ||
+      password === '' ||
+      name.indexOf('-') !== -1
+    ) {
+      alert('Please Fill All The Fields Correctly');
     } else {
       registerUser({ name, email, password });
     }
@@ -50,7 +54,7 @@ const Register = ({ setAlert, registerUser, isReg }) => {
             </div>
             <br />
             <div>
-              <form onSubmit={e => onSubmitHandler(e)}>
+              <form onSubmit={(e) => onSubmitHandler(e)}>
                 <p className="p1">
                   Enter your email address to create your account.
                 </p>
@@ -60,7 +64,7 @@ const Register = ({ setAlert, registerUser, isReg }) => {
                   placeholder="Full Name"
                   id="fullname"
                   value={name}
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                 />
                 <input
                   type="email"
@@ -68,7 +72,7 @@ const Register = ({ setAlert, registerUser, isReg }) => {
                   placeholder="Email"
                   id="email1"
                   value={email}
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                 />
                 <input
                   type="password"
@@ -76,23 +80,23 @@ const Register = ({ setAlert, registerUser, isReg }) => {
                   placeholder="Create a Password"
                   id="pass"
                   value={password}
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                 />
 
                 <button
                   className="btn w-100prc"
                   id="submitBtn"
-                  onClick={e => onSubmitHandler(e)}
-                  style={{marginTop: '14px'}}
+                  onClick={(e) => onSubmitHandler(e)}
+                  style={{ marginTop: '14px' }}
                 >
                   Create Account
                 </button>
                 <p className="bl">
-                  By signing up, you agree to our{" "}
+                  By signing up, you agree to our{' '}
                   <Link to="terms_and_conditions" className="forgot">
-                    Terms{" "}
+                    Terms{' '}
                   </Link>
-                  and{" "}
+                  and{' '}
                   <Link to="privacy_policy" className="forgot">
                     Privacy Policy
                   </Link>
@@ -105,7 +109,7 @@ const Register = ({ setAlert, registerUser, isReg }) => {
     </div>
   );
 };
-const mapStateToProps = state => ({
-  isReg: state.registerUser.isAuth
+const mapStateToProps = (state) => ({
+  isReg: state.registerUser.isAuth,
 });
 export default connect(mapStateToProps, { setAlert, registerUser })(Register);
