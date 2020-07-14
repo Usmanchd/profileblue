@@ -7,6 +7,9 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const makeid = require('../../middleware/makeId');
 const nodemailer = require('nodemailer');
+const jsonfile = require('jsonfile');
+
+
 
 // @route  POST/api/users
 //@desc    Register user
@@ -22,15 +25,9 @@ router.post('/register', async (req, res) => {
         .status(400)
         .json({ errors: { msg: 'User is already registered' } });
     }
-    let lengthId = '';
-    let uniqueNotFound = true;
-    while (uniqueNotFound) {
-      lengthId = makeid(8) + '-' + parseInt((await User.countDocuments()) + 1);
 
-      let uuser = await User.findOne({ lengthId });
-
-      if (!uuser) uniqueNotFound = false;
-    }
+    const lengthId =
+      makeid(8) + '-' + parseInt((await User.countDocuments()) + 1);
 
     let names = await User.find({ privateName: name.toLowerCase() });
 
@@ -48,6 +45,7 @@ router.post('/register', async (req, res) => {
       email,
       password,
     });
+
     // // hashing the password
 
     const salt = await bcrypt.genSalt(10);

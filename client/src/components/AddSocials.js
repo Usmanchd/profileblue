@@ -17,7 +17,7 @@ const AddSocials = ({ isAuth, user, updateUser, loading }) => {
       user.bio !== undefined &&
       user.social !== undefined
     ) {
-      return <Redirect to={`/${user.userName}`} />;
+      return <Redirect to={`/${user.lengthId}`} />;
     }
   }
 
