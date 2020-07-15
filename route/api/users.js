@@ -9,7 +9,73 @@ const makeid = require('../../middleware/makeId');
 const nodemailer = require('nodemailer');
 const jsonfile = require('jsonfile');
 
+router.get('/insert-record', async (req, res) => {
+  try {
+    const name = 'Usman';
+    const file = 'data.json';
+    let array = [];
+    let obj = [];
 
+    for (let index = 0; index < 9; index++) {
+      const lengthId = makeid(8) + '-' + parseInt(index + 1);
+
+      // let names = await User.find({ privateName: name.toLowerCase() });
+
+      let userName = name.replace(/\s+/g, '').toLowerCase();
+      if (index > 0) {
+        userName = `${userName}-${index}`;
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      let password = lengthId;
+      obj.push({ email: userName + '@gmail.com', password });
+      password = await bcrypt.hash(password, salt);
+      user = new User({
+        privateName: name.toLowerCase(),
+        lengthId,
+        userName,
+        name,
+        email: userName + '@gmail.com',
+        password,
+        avatarUrl:
+          'https://firebasestorage.googleapis.com/v0/b/blue-f42e7.appspot.com/o/images%2F9f0524f8-059a-4401-9ee0-9057eb3878ed.jpg?alt=media&token=0c175f2f-9557-46b8-9f65-7534d4621dcc',
+        bio: '',
+        social: {
+          instagram: { value: '', clicks: 0 },
+          venmo: { value: '', clicks: 0 },
+          snapchat: { value: '', clicks: 0 },
+          whatsapp: { value: '', clicks: 0 },
+          phone: { value: '', clicks: 0 },
+          twitter: { value: '', clicks: 0 },
+          facebook: { value: '', clicks: 0 },
+          linkedin: { value: '', clicks: 0 },
+          youtube: { value: '', clicks: 0 },
+          tiktok: { value: '', clicks: 0 },
+          twitch: { value: '', clicks: 0 },
+          pinterest: { value: '', clicks: 0 },
+          applemusic: { value: '', clicks: 0 },
+          spotify: { value: '', clicks: 0 },
+          paypal: { value: '', clicks: 0 },
+          soundcloud: { value: '', clicks: 0 },
+          website: { value: '', clicks: 0 },
+          link: { value: '', clicks: 0 },
+          s_email: { value: '', clicks: 0 },
+          address: { value: '', clicks: 0 },
+          skype: { value: '', clicks: 0 },
+        },
+      });
+
+      // await user.save();
+
+      array.push(user);
+    }
+    await User.insertMany(array);
+    await jsonfile.writeFile(file, obj);
+    res.send('success');
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // @route  POST/api/users
 //@desc    Register user
@@ -120,23 +186,48 @@ router.get('/reset/:email', async (req, res) => {
     }
 
     const transporter = nodemailer.createTransport({
-      service: 'Yandex',
+      host: 'smtp-mail.outlook.com', // hostname
+      secureConnection: false, // TLS requires secureConnection to be false
+      port: 587, // port for secure SMTP
+      tls: {
+        ciphers: 'SSLv3',
+      },
+      // service: '"Outlook365"',
       auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
+        // user: process.env.EMAIL,
+        // pass: process.env.PASSWORD,
+        user: 'csgofree17@outlook.com',
+        pass: 'alwayshappy12345',
       },
     });
 
     await transporter.sendMail({
-      from: process.env.EMAIL,
+      from: 'csgofree17@outlook.com',
       to: user.email,
       subject: 'Reset Password✔',
       text: `Your Reset Code is ${code}`,
       html: `<h1>Your Reset Code is <ul>${code}</ul></h1>`,
     });
 
+    // const transporter = nodemailer.createTransport({
+    //   service: 'Yandex',
+    //   auth: {
+    //     user: process.env.EMAIL,
+    //     pass: process.env.PASSWORD,
+    //   },
+    // });
+
+    // await transporter.sendMail({
+    //   from: process.env.EMAIL,
+    //   to: user.email,
+    //   subject: 'Reset Password✔',
+    //   text: `Your Reset Code is ${code}`,
+    //   html: `<h1>Your Reset Code is <ul>${code}</ul></h1>`,
+    // });
+
     res.status(200).send('Check Your Email');
   } catch (err) {
+    console.log(err);
     res.status(500).json({ msg: 'Server Error' });
   }
 });
