@@ -186,44 +186,20 @@ router.get('/reset/:email', async (req, res) => {
     }
 
     const transporter = nodemailer.createTransport({
-      host: 'smtp-mail.outlook.com', // hostname
-      secureConnection: false, // TLS requires secureConnection to be false
-      port: 587, // port for secure SMTP
-      tls: {
-        ciphers: 'SSLv3',
-      },
-      // service: '"Outlook365"',
+      service: 'Yandex',
       auth: {
-        // user: process.env.EMAIL,
-        // pass: process.env.PASSWORD,
-        user: 'csgofree17@outlook.com',
-        pass: 'alwayshappy12345',
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
       },
     });
 
     await transporter.sendMail({
-      from: 'csgofree17@outlook.com',
+      from: process.env.EMAIL,
       to: user.email,
       subject: 'Reset Password✔',
       text: `Your Reset Code is ${code}`,
       html: `<h1>Your Reset Code is <ul>${code}</ul></h1>`,
     });
-
-    // const transporter = nodemailer.createTransport({
-    //   service: 'Yandex',
-    //   auth: {
-    //     user: process.env.EMAIL,
-    //     pass: process.env.PASSWORD,
-    //   },
-    // });
-
-    // await transporter.sendMail({
-    //   from: process.env.EMAIL,
-    //   to: user.email,
-    //   subject: 'Reset Password✔',
-    //   text: `Your Reset Code is ${code}`,
-    //   html: `<h1>Your Reset Code is <ul>${code}</ul></h1>`,
-    // });
 
     res.status(200).send('Check Your Email');
   } catch (err) {
