@@ -3,10 +3,14 @@ const app = express();
 const connectDb = require('./config/db');
 const users = require('./route/api/users');
 const auth = require('./route/api/auth');
-var cors = require('cors');
+const cors = require('cors');
 const path = require('path');
 const dotenv = require('dotenv');
+const secure = require('ssl-express-www');
+
 dotenv.config();
+
+app.use(secure);
 
 app.use(express.static('public'));
 
