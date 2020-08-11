@@ -32,7 +32,12 @@ const PublicProfile = ({ authh: { isAuth, loading }, logedUser }) => {
             history.push(`/${user.userName}`);
           })
           .catch(() => {
-            seterror('not Found');
+            axios
+              .get(`/api/users/current/${id}`)
+              .then((user) => setuser(user.data))
+              .catch(() => {
+                seterror('not Found');
+              });
           });
       } else {
         axios

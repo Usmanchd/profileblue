@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import { setAlert } from '../actions/alerts';
 import { registerUser } from '../actions/registerUser';
 
+function hasNumber(myString) {
+  return /\d/.test(myString);
+}
+
 const Register = ({ setAlert, registerUser, isReg }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -20,7 +24,8 @@ const Register = ({ setAlert, registerUser, isReg }) => {
       name === '' ||
       email === '' ||
       password === '' ||
-      name.indexOf('-') !== -1
+      name.indexOf('-') !== -1 ||
+      hasNumber(name)
     ) {
       alert('Please Fill All The Fields Correctly');
     } else {
